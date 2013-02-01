@@ -113,6 +113,7 @@ set(SOURCES
     src/physics/pray.cpp
     src/net/robocup_ssl_server.cpp
     src/net/robocup_ssl_client.cpp
+    src/net/netraw.cpp
     src/sslworld.cpp
     src/robot.cpp
     src/configwidget.cpp
@@ -136,6 +137,8 @@ set(HEADERS
     src/physics/pray.h
     src/net/robocup_ssl_server.h
     src/net/robocup_ssl_client.h
+    src/net/netraw.h
+    src/net/util.h
     src/sslworld.h
     src/robot.h
     src/configwidget.h
@@ -147,6 +150,11 @@ set(HEADERS
     src/config.h
 )
 
+QT4_WRAP_CPP(HEADERS_MOC ${HEADERS})
+# INCLUDE(${QT_USE_FILE})
+# ADD_DEFINITIONS(${QT_DEFINITIONS})
+
+
 # files to be compiled
 set(srcs
     ${CONFIG_FILES}
@@ -155,6 +163,7 @@ set(srcs
     ${RESOURCES}
     ${HEADERS}
     ${SOURCES}
+    ${HEADERS_MOC}
 )
 
 file(GLOB CONFIG_FILES "config/*.ini")

@@ -1,8 +1,6 @@
 #include "netraw.h"
 #ifdef QT_WITHOUT_MULTICAST
 
-
-#ifdef Q_OS_UNIX
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/poll.h>
@@ -292,5 +290,4 @@ int main(int argc, char **argv)
 
 #endif
 
-#endif
 #endif

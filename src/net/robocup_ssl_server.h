@@ -17,6 +17,7 @@
   \brief   C++ Interface: robocup_ssl_server
   \author  Stefan Zickler, 2009
   \author  Jan Segre, 2012
+  \author  Ali Koochakzadeh, 2013
 */
 //========================================================================
 #ifndef ROBOCUP_SSL_SERVER_H
@@ -24,10 +25,14 @@
 #include <string>
 #include <QMutex>
 #include <QObject>
-#include "messages_robocup_ssl_detection.pb.h"
-#include "messages_robocup_ssl_geometry.pb.h"
-#include "messages_robocup_ssl_wrapper.pb.h"
+#include <messages_robocup_ssl_detection.pb.h>
+#include <messages_robocup_ssl_geometry.pb.h>
+#include <messages_robocup_ssl_wrapper.pb.h>
 using namespace std;
+
+#include "netraw.h"
+
+#ifndef QT_WITHOUT_MULTICAST
 
 class QUdpSocket;
 class QHostAddress;
@@ -58,6 +63,34 @@ protected:
     QHostAddress * _net_address;
     QNetworkInterface * _net_interface;
 };
+
+#else
+
+
+class RoboCupSSLServer{
+protected:
+  Net::UDP mc; // multicast server
+  QMutex mutex;
+  int _port;
+  string _net_address;
+  string _net_interface;
+
+public:
+    RoboCupSSLServer(int port = 10002,
+                     string net_ref_address="224.5.23.2",
+                     string net_ref_interface="");
+
+    ~RoboCupSSLServer();
+    bool open();
+    void close();
+    bool send(const SSL_WrapperPacket & packet);
+    bool send(const SSL_DetectionFrame & frame);
+    bool send(const SSL_GeometryData & geometry);
+
+};
+
+#endif
+
 
 #endif
 

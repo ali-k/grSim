@@ -1,9 +1,10 @@
 
-#ifdef QT_WITHOUT_MULTICAST
+#if QT_VERSION <= 0x40703
+#define QT_WITHOUT_MULTICAST
 
 
 #include <QtGlobal>
-#ifdef Q_OS_UNIX
+
 #ifndef _INCLUDED_NETRAW_H_
 #define _INCLUDED_NETRAW_H_
 
@@ -88,5 +89,6 @@ public:
 #endif
 
 
-#endif
+#else
+#undef QT_WITHOUT_MULTICAST
 #endif
